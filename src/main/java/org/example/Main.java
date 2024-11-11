@@ -7,6 +7,5 @@ public class Main {
     public static void main(String[] args) {
         //Start Server
         //Stop Server
-        HttpRequestParser parser = new HttpRequestParser();
     }
 }
