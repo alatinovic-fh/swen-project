@@ -5,6 +5,6 @@ import org.example.server.http.Response;
 
 public interface Application {
 
-    Response handle(Request request, Response response);
+    Response handle(Request request);
 
 }
