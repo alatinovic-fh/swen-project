@@ -21,14 +21,15 @@ public class HttpResponseFormatter {
                 append("\r\n");
 
         //Set Header
-        //result.append(response.getHeadersAsString());
-        for(String key : response.getHeaders().keySet()){
-            result.append(key).append(": ").append(response.getHeaders().get(key)).append("\r\n");
-        }
-        if(response.getBody() == null) { //Set Header Content-Length based on body length
-            result.append("Content-Length: ").append("0").append("\r\n");
+        if(response.getBody() == null || response.getBody().isEmpty()) { //Set Header Content-Length based on body length
+            response.setHeader("Content-Length", "0");;
         }else{
-            result.append("Content-Length: ").append(response.getBody().length()).append("\r\n");
+            response.setHeader("Content-Length", String.valueOf(response.getBody().length()));
+        }
+        for(String key : response.getHeaders().keySet()){
+            result.append(key).append(": ").
+                    append(response.getHeaders().get(key)).
+                    append("\r\n");
         }
         result.append("\r\n");
 

@@ -15,24 +15,6 @@ public class Response {
         this.headers = new HashMap<>();
     }
 
-    /**
-     * This method converts the headers-Map to a String
-     * @return the headers-Map as a String
-     */
-    /*
-    public String getHeadersAsString(){
-        StringBuilder result = new StringBuilder();
-        for(String key : headers.keySet()){
-            result.append(key).append(": ").append(headers.get(key)).append("\r\n");
-        }
-        if(this.getBody() == null) { //Set Header Content-Length based on body length
-            result.append("Content-Length: ").append("0").append("\r\n");
-        }else{
-            result.append("Content-Length: ").append(this.getBody().length()).append("\r\n");
-        }
-        return result.toString();
-    }
-    */
 
     //Getter and Setter
     public String getHeader(String name) {
