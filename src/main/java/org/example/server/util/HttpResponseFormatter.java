@@ -4,7 +4,11 @@ import org.example.server.http.Response;
 
 public class HttpResponseFormatter {
 
-    //object to httpsting
+    /**
+     * This method formats the Java-object "Response" to a Raw HTTP-Response
+     * @param response the object to format
+     * @return raw HTTP-Response
+     */
     public String format(Response response) {
         StringBuilder result = new StringBuilder();
 
@@ -18,11 +22,6 @@ public class HttpResponseFormatter {
 
         //Set Header
         result.append(response.headersToString());
-        if(response.getBody() == null) { //Set Header Content-Length based on body length
-            result.append("Content-Length: ").append("0").append("\r\n");
-        }else{
-            result.append("Content-Length: ").append(response.getBody().length()).append("\r\n");
-        }
         result.append("\r\n");
 
         //Set Body
