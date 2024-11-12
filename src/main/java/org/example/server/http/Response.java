@@ -19,7 +19,8 @@ public class Response {
      * This method converts the headers-Map to a String
      * @return the headers-Map as a String
      */
-    public String headersToString(){
+    /*
+    public String getHeadersAsString(){
         StringBuilder result = new StringBuilder();
         for(String key : headers.keySet()){
             result.append(key).append(": ").append(headers.get(key)).append("\r\n");
@@ -31,7 +32,9 @@ public class Response {
         }
         return result.toString();
     }
+    */
 
+    //Getter and Setter
     public String getHeader(String name) {
         return this.headers.get(name);
     }
