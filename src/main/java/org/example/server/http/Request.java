@@ -9,6 +9,7 @@ public class Request {
     private String path;
     private Map<String, String> header;
     private String body;
+    private String http;
 
 
     public Request() {
@@ -45,5 +46,13 @@ public class Request {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getHttp() {
+        return http;
+    }
+
+    public void setHttp(String http) {
+        this.http = http;
     }
 }

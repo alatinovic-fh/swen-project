@@ -1,4 +1,4 @@
-package org.example.application.html;
+package org.example.application.presentation;
 
 import org.example.server.Application;
 import org.example.server.http.Request;
@@ -9,6 +9,27 @@ public class SimpleHtmlApplication implements Application {
 
     @Override
     public Response handle(Request request) {
+        Response response  = new Response();
+        switch (request.getPath()) {
+            case "/html":
+                response.setStatus(Status.OK);
+                response.setHeader("Content-Type", "text/html");
+                response.setBody("<h1>Hello World</h1>");
+                break;
+            case "/app":
+                response.setStatus(Status.OK);
+                response.setHeader("Content-Type", "text/html");
+                response.setBody("<h1>APP</h1>");
+                break;
+            default:
+                response.setStatus(Status.NOT_FOUND);
+                response.setHeader("Content-Type", "text/html");
+                response.setBody("<h1>404 NOT FOUND</h1>");
+        }
+
+        return response;
+
+        /*
         StringBuilder result = new StringBuilder();
         Response response = new Response();
         response.setStatus(Status.OK);
@@ -25,5 +46,6 @@ public class SimpleHtmlApplication implements Application {
         response.setHeader("Content-Length", String.valueOf(result.toString().length()));
         response.setBody(result.toString());
         return response;
+         */
     }
 }

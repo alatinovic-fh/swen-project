@@ -12,31 +12,45 @@ public class HttpRequestParser {
      */
     public Request parse(String http) {
         Request request = new Request();
+        request.setHttp(http);
+
         String[] lines = http.split("\r\n");
-        String[] firstLine = lines[0].split(" ");
+        String requestLine = lines[0];
+        String[] requestLineParts = requestLine.split(" ");
 
-        //Set Method
-        request.setMethod(Method.valueOf(firstLine[0]));
-        //Set Path
-        request.setPath(firstLine[1]);
+        request.setMethod(Method.valueOf(requestLineParts[0]));
+        request.setPath(requestLineParts[1]);
 
-        //Set Headers
-        int i = 1; //Start after the first line
-        for(int j = i; j<lines.length; j++) {
-            if(lines[j].isEmpty()) break;
-            String[] headerParts = lines[j].split(":",2);
+        // parse headers
+        int emptyLine = 0;
+        for (int i = 1; i < lines.length; i++) {
+            String line = lines[i];
+
+            if (line.isEmpty()) {
+                emptyLine = i;
+                break;
+            }
+
+            String[] headerParts = line.split(":", 2);
             request.setHeader(headerParts[0], headerParts[1].trim());
         }
 
-        //Set Body if present
-        StringBuilder bodyBuilder = new StringBuilder();
-        for (int j = i + 1; j < lines.length; j++) { //The i+1 skips the empty line
-            bodyBuilder.append(lines[j]).append("\n");
+        if (emptyLine == 0 || lines.length - 1 == emptyLine) {
+            return request;
         }
-        if (!bodyBuilder.isEmpty()) {
-            request.setBody(bodyBuilder.toString().trim()); //creates Body-String
-        }
-        return request;
 
+        // parse body
+        StringBuilder bodyBuilder = new StringBuilder();
+        for (int i = emptyLine + 1; i < lines.length; i++) {
+            bodyBuilder.append(lines[i]);
+
+            if (lines.length - 1 != i) {
+                bodyBuilder.append("\r\n");
+            }
+        }
+
+        request.setBody(bodyBuilder.toString());
+
+        return request;
     }
 }
