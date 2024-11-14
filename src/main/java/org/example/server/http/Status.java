@@ -2,6 +2,7 @@ package org.example.server.http;
 
 public enum Status {
     OK(200, "OK"),
+    CREATED(201, "CREATED"),
     NOT_FOUND(404, "OK"),
     INTERNAL_SERVER_ERROR(500, "Internal Server Error");
 

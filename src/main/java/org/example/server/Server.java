@@ -17,6 +17,8 @@ public class Server {
         //open port
         try {
             this.serverSocket = new ServerSocket(10001);
+            System.out.println("Server started");
+            System.out.println("Listening on port 10001");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
