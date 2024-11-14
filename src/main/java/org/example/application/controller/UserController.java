@@ -8,8 +8,6 @@ import org.example.server.http.Request;
 import org.example.server.http.Response;
 import org.example.server.http.Status;
 
-import java.io.ObjectStreamException;
-
 public class UserController {
 
     private final UserService userService = new UserService();
@@ -17,18 +15,20 @@ public class UserController {
     public Response register(Request request) {
         //request -> User
         ObjectMapper objectMapper = new ObjectMapper();
-        User user = null;
-        try {
-            user = objectMapper.readValue(request.getBody(), User.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        user = userService.create(user);
         Response response = new Response();
-        response.setStatus(Status.CREATED);
-        response.setHeader("Content-Type", "application/json");
-        response.setBody("{ \"Username\": \"" + user.getUsername() + "\" }");
-        return response;
+        try {
+            User user = objectMapper.readValue(request.getBody(), User.class);
+            user = userService.create(user);
+            response.setStatus(Status.CREATED);
+            response.setHeader("Content-Type", "application/json");
+            response.setBody("{ \"Username\": \"" + user.getUsername() + "\" }");
+        } catch (JsonProcessingException e) {
+            response.setStatus(Status.INTERNAL_SERVER_ERROR);
+            response.setBody(e.getMessage());
+        } finally {
+            return response;
+        }
+
     }
 
 }
