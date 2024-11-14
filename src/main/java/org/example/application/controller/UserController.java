@@ -25,10 +25,8 @@ public class UserController {
         } catch (JsonProcessingException e) {
             response.setStatus(Status.INTERNAL_SERVER_ERROR);
             response.setBody(e.getMessage());
-        } finally {
-            return response;
         }
-
+        return response;
     }
 
 }
