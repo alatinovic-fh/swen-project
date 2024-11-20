@@ -1,7 +1,19 @@
 package org.example.application.entity;
 
 
-public class Card {
-    String name;
+import java.lang.annotation.ElementType;
 
+public class Card {
+
+    private String name;
+
+    private final int damage;
+
+    private Element element;
+
+    private boolean isMonster;
+
+    public Card(int damage) {
+        this.damage = damage;
+    }
 }

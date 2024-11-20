@@ -14,6 +14,7 @@ public class User {
 
     private List<Card> cards;
 
+    private int coins;
 
     public User() {
     }
@@ -21,6 +22,7 @@ public class User {
     public User(String username, String password) {
         this.username = username; //unique
         this.password = password;
+        this.coins = 20;
         this.cards = new ArrayList<>();
     }
 
@@ -31,4 +33,13 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
 }

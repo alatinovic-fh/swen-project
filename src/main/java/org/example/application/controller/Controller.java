@@ -30,6 +30,7 @@ public abstract class Controller {
         }
     }
 
+
     protected Response json(Status status, Object object) {
         Response response = new Response();
         response.setStatus(status);
