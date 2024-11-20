@@ -21,7 +21,7 @@ public class PostgresConfig {
             // Attempt to connect to the database using the URL, user, and password.
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            System.err.println("Error connecting to the database: " + e.getMessage());
+            //TODO Errorhandling
         }
         return null;
     }
