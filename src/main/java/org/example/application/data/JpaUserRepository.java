@@ -25,11 +25,11 @@ public class JpaUserRepository implements UserRepository {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
 
-            int rowsAffected = statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate(); //Update entry
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle SQL exceptions (e.g., log the error)
+            // TODO Handle SQL exceptions
         }
 
         return user;
