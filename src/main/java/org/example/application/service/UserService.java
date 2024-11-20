@@ -16,9 +16,4 @@ public class UserService {
     public User create (User user) throws UserAlreadyExistsException {
         return userRepository.save(user);
     }
-
-    public User find (String username) {
-        return userRepository.findByUsername(username);
-    }
-
 }

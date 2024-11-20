@@ -14,6 +14,15 @@ public class JpaUserRepository implements UserRepository {
     public JpaUserRepository() {
     }
 
+
+    /**
+     *
+     * This method inserts a User object into the database
+     *
+     * @param user
+     * @return the user that has been added
+     * @throws UserAlreadyExistsException
+     */
     @Override
     public User save(User user) throws UserAlreadyExistsException {
         if (this.userExists(user.getUsername())) {
