@@ -32,26 +32,12 @@ public class UserController extends Controller {
         return null;
     }
 
-    public Response getUser(Request request) {
-        // TODO implement findByUsername
-        String username = request.getPath().split("/")[1];
-        return null;
-
-    }
-
-    public Response updateUserdata(Request request) {
-        return null;
-    }
-
     @Override
     public Response handle(Request request) {
         // TODO Handle logic GET, POST, PUT, DELETE
         if (request.getMethod().getName().equals("POST")) {
             return register(request);
-        } else if(request.getMethod().getName().equals("GET")) {
-            return getUser(request);
         }
-
         return null;
     }
 }
