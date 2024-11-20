@@ -35,12 +35,6 @@ public class JpaUserRepository implements UserRepository {
         return user;
     }
 
-    @Override
-    public User findByUsername(String username) {
-        return null;
-    }
-
-
     /**
      * This method checks if the user exists in the database
      *

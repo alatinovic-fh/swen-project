@@ -9,6 +9,5 @@ public interface UserRepository {
 
     public User save(User user);
 
-    public User findByUsername(String username);
 
 }
