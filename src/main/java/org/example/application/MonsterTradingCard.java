@@ -11,10 +11,16 @@ import org.example.server.http.Status;
 
 public class MonsterTradingCard implements Application {
 
-    private final Router router = new Router();
+    private final Router router;
+
+    public MonsterTradingCard(){
+        this.router = new Router();
+        this.initializeRoutes();
+    }
 
     @Override
     public Response handle(Request request) {
+
         Response response = new Response();
         try{
             Controller controller = this.router.getController(request.getPath());
