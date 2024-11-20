@@ -12,21 +12,11 @@ public class UserController extends Controller {
 
     private final UserService userService = new UserService();
 
-    public Response register(Request request) {
+    private Response register(Request request) {
         //request -> User
-        ObjectMapper objectMapper = new ObjectMapper();
-        Response response = new Response();
-        try {
-            User user = objectMapper.readValue(request.getBody(), User.class);
-            user = userService.create(user);
-            response.setStatus(Status.CREATED);
-            response.setHeader("Content-Type", "application/json");
-            response.setBody("{ \"Username\": \"" + user.getUsername() + "\" }");
-        } catch (JsonProcessingException e) {
-            response.setStatus(Status.INTERNAL_SERVER_ERROR);
-            response.setBody(e.getMessage());
-        }
-        return response;
+        User user = fromBody(request.getBody(), User.class);
+        user = userService.create(user);
+        return json(Status.CREATED, user);
     }
 
     public Response login(Request request) {

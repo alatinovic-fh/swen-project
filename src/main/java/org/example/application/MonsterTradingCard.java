@@ -2,7 +2,7 @@ package org.example.application;
 
 import org.example.application.controller.Controller;
 import org.example.application.controller.UserController;
-import org.example.application.routing.ControllerNotFound;
+import org.example.application.exception.ControllerNotFound;
 import org.example.application.routing.Router;
 import org.example.server.Application;
 import org.example.server.http.Request;
@@ -20,7 +20,6 @@ public class MonsterTradingCard implements Application {
 
     @Override
     public Response handle(Request request) {
-
         Response response = new Response();
         try{
             Controller controller = this.router.getController(request.getPath());
@@ -28,12 +27,9 @@ public class MonsterTradingCard implements Application {
         }catch (ControllerNotFound e){
             response.setStatus(Status.NOT_FOUND);
             response.setHeader("Content-Type", "text/html");
-            response.setBody("<h1>404 NOT FOUND</h1>");
+            response.setBody("<h1> " + e.getMessage() +  "</h1>");
         }
-
-
         return response;
-
     }
 
     private void initializeRoutes(){

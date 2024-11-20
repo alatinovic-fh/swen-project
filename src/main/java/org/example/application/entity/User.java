@@ -2,6 +2,9 @@ package org.example.application.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     @JsonProperty("Username")
     private String username;
@@ -9,13 +12,16 @@ public class User {
     @JsonProperty("Password")
     private String password;
 
-    public User() {
+    private List<Card> cards;
 
+
+    public User() {
     }
 
     public User(String username, String password) {
         this.username = username; //unique
         this.password = password;
+        this.cards = new ArrayList<>();
     }
 
     public String getPassword() {

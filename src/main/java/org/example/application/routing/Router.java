@@ -1,12 +1,10 @@
 package org.example.application.routing;
 
 import org.example.application.controller.Controller;
-import org.example.application.controller.UserController;
+import org.example.application.exception.ControllerNotFound;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Router {
 
@@ -21,11 +19,9 @@ public class Router {
             if(!path.startsWith(route.getRoute())){
                 continue;
             }
-
             return route.getController();
         }
-
-        throw new ControllerNotFound(path);
+        throw new ControllerNotFound("Not found path: "+path);
     }
 
     public void addRoute(String route, Controller controller){
