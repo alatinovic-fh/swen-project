@@ -21,7 +21,7 @@ public class JpaUserRepository implements UserRepository {
         }
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection connection = PostgresConfig.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
@@ -29,6 +29,7 @@ public class JpaUserRepository implements UserRepository {
             statement.executeUpdate(); //Update entry
 
         } catch (SQLException e) {
+            // TODO Errorhandling
         }
 
         return user;
@@ -53,21 +54,19 @@ public class JpaUserRepository implements UserRepository {
         try (Connection connection = PostgresConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            // Parameter setzen
+            // Set Param
             statement.setString(1, username);
 
-            // Abfrage ausführen
+            // Execute query
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getBoolean(1); // Ergebnis der EXISTS-Abfrage
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error checking if user exists: " + e.getMessage());
-            e.printStackTrace();
+            // TODO Errorhandling
         }
 
-        // Rückgabe false, falls ein Fehler auftritt oder kein Ergebnis vorhanden ist
         return false;
     }
 
