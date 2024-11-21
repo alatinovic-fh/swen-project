@@ -1,7 +1,7 @@
 package org.example.application.routing;
 
 import org.example.application.controller.Controller;
-import org.example.application.exception.ControllerNotFound;
+import org.example.application.exception.ControllerNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class Router {
             }
             return route.getController();
         }
-        throw new ControllerNotFound("Not found path: "+path);
+        throw new ControllerNotFoundException("Not found path: "+path);
     }
 
     public void addRoute(String route, Controller controller){

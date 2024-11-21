@@ -2,7 +2,7 @@ package org.example.application;
 
 import org.example.application.controller.Controller;
 import org.example.application.controller.UserController;
-import org.example.application.exception.ControllerNotFound;
+import org.example.application.exception.ControllerNotFoundException;
 import org.example.application.routing.Router;
 import org.example.server.Application;
 import org.example.server.http.Request;
@@ -24,7 +24,7 @@ public class MonsterTradingCard implements Application {
         try{
             Controller controller = this.router.getController(request.getPath());
             response = controller.handle(request);
-        }catch (ControllerNotFound e){
+        }catch (ControllerNotFoundException e){
             response.setStatus(Status.NOT_FOUND);
             response.setHeader("Content-Type", "text/html");
             response.setBody("<h1> " + e.getMessage() +  "</h1>");

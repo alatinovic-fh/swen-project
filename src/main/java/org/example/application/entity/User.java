@@ -16,6 +16,10 @@ public class User {
 
     private int coins;
 
+    private String bio;
+
+    private String image;
+
     public User() {
     }
 
@@ -42,4 +46,11 @@ public class User {
         return coins;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public String getImage() {
+        return image;
+    }
 }
