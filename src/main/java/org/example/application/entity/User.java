@@ -12,12 +12,19 @@ public class User {
     @JsonProperty("Password")
     private String password;
 
-    private List<Card> cards;
+    @JsonProperty("Stack")
+    private List<Card> stack;
 
+    @JsonProperty("deck")
+    private List<Card> deck;
+
+    @JsonProperty("Coins")
     private int coins;
 
+    @JsonProperty("Bio")
     private String bio;
 
+    @JsonProperty
     private String image;
 
     public User() {
@@ -27,7 +34,7 @@ public class User {
         this.username = username; //unique
         this.password = password;
         this.coins = 20;
-        this.cards = new ArrayList<>();
+        this.stack = new ArrayList<>();
     }
 
     public String getPassword() {
@@ -38,8 +45,8 @@ public class User {
         return username;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> getStack() {
+        return stack;
     }
 
     public int getCoins() {
