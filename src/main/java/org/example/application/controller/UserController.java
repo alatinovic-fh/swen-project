@@ -32,6 +32,7 @@ public class UserController extends Controller {
         try{
             String token = userService.auth(user);
             response = json(Status.OK, token);
+            System.out.printf(token);
         }catch (AuthenticationFailedException e) {
             response.setStatus(Status.UNAUTHORIZED);
             response.setBody(e.getMessage());

@@ -45,7 +45,7 @@ public class JpaUserRepository implements UserRepository {
 
 
     @Override
-    public String verify(User user) {
+    public boolean verify(User user) throws AuthenticationFailedException {
         if (!userExists(user.getUsername())) {
             throw new AuthenticationFailedException("Login failed");
         }
@@ -61,7 +61,7 @@ public class JpaUserRepository implements UserRepository {
                     String storedPassword = resultSet.getString("password");
 
                     if (storedPassword.equals(user.getPassword())) {
-                        return user.getUsername() + "-mtcgToken";
+                        return true;
                     }
                 }
             }
