@@ -5,6 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This is the User entity for the Table "users"
+ *
+ * @author Aleksandar Latinovic
+ * */
 public class User {
     @JsonProperty("Username")
     private String username;

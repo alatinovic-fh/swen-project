@@ -9,16 +9,12 @@ import org.example.server.util.HttpSocket;
 import java.io.IOException;
 import java.net.Socket;
 import java.time.LocalDateTime;
-
+/**
+ * This class handles the incoming Requests
+ *
+ * @author Aleksandar Latinovic
+ * */
 public class RequestHandler {
-
-    // [x]receive Socket
-    // [x]wrap Socket in HttpSocket
-    // [x] get HTTP request
-    // give response to Application#
-    // receive response
-    // format response to HTTP response
-    // send response to client
 
     private final Socket socket;
     private final Application application;

@@ -3,6 +3,11 @@ package org.example.server.util;
 import org.example.server.http.Method;
 import org.example.server.http.Request;
 
+/**
+ * This class contains the logic to parse a Http-Request
+ *
+ * @author Aleksandar Latinovic
+ */
 public class HttpRequestParser {
 
     /**

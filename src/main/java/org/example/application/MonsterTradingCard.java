@@ -9,6 +9,12 @@ import org.example.server.http.Request;
 import org.example.server.http.Response;
 import org.example.server.http.Status;
 
+/**
+ * The MonsterTradingCard class implements the Application interface and represents
+ * a simple web application that handles HTTP requests and routes them to appropriate controllers.
+ *
+ * @author Aleksandar Latinovic
+ * */
 public class MonsterTradingCard implements Application {
 
     private final Router router;
@@ -18,7 +24,13 @@ public class MonsterTradingCard implements Application {
         this.initializeRoutes();
     }
 
-    @Override
+    /**
+     * Handles an incoming HTTP request and returns an appropriate HTTP response.
+     *
+     * @param request request The incoming HTTP request
+     * @return The HTTP response to be sent back to the client.
+     */
+ @Override
     public Response handle(Request request) {
         Response response = new Response();
         try{

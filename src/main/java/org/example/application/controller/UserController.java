@@ -7,13 +7,23 @@ import org.example.application.service.UserService;
 import org.example.server.http.Request;
 import org.example.server.http.Response;
 import org.example.server.http.Status;
+/**
+ * This class handles the Requests for the User
+ *
+ * @author Aleksandar Latinovic
+ * */
 
 public class UserController extends Controller {
 
     private final UserService userService = new UserService();
 
+    /**
+     * This method registers a new User to the database
+     *
+     * @param request
+     * @return the registered user
+     */
     private Response register(Request request) {
-        //request -> User
         User user = fromBody(request.getBody(), User.class);
         Response response = new Response();
         try {
@@ -26,6 +36,13 @@ public class UserController extends Controller {
         return response;
     }
 
+    /**
+     * This method is used to login a user and returns a Token to
+     * authenticate the user
+     *
+     * @param request
+     * @return the specific token
+     */
     public Response login(Request request) {
         Response response = new Response();
         User user = fromBody(request.getBody(), User.class);
@@ -39,6 +56,12 @@ public class UserController extends Controller {
         return response;
     }
 
+    /**
+     * This method defines the used Route
+     *
+     * @param request
+     * @return the Response specific to the Route
+     */
     @Override
     public Response handle(Request request) {
         // TODO Handle logic GET, POST, PUT, DELETE

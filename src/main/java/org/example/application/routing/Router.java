@@ -6,6 +6,13 @@ import org.example.application.exception.ControllerNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains the logic for choosing the
+ * Controllers by matching the Routes with the given path
+ *
+ * @author Aleksandar Latinovic
+ * */
+
 public class Router {
 
     private final List<Route> routes;
@@ -14,7 +21,14 @@ public class Router {
         this.routes = new ArrayList<>();
     }
 
-    public Controller getController(String path){
+    /**
+     * This method iterates through all Routes and matches
+     * them with the given Path
+     *
+     * @param path
+     * @return the Controller that matches the Route
+     */
+    public Controller getController(String path) {
         for(Route route : this.routes){
             if(!path.startsWith(route.getRoute())){
                 continue;

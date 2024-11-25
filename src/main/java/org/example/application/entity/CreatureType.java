@@ -1,5 +1,11 @@
 package org.example.application.entity;
 
+
+/**
+ * This enum contains all Card varations (name element and if the card is a spell)
+ *
+ * @author Aleksandar Latinovic
+ * */
 public enum CreatureType {
     WATER_GOBLIN("Goblin", "Water", false),
     FIRE_GOBLIN("Goblin", "Fire", false),

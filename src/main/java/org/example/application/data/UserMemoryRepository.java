@@ -7,12 +7,17 @@ import org.example.application.util.PostgresConfig;
 
 import java.sql.*;
 
+
+/**
+ * This method handles the sql-queries for the user
+ *
+ * @author Aleksandar Latinovic
+ * */
 public class UserMemoryRepository implements UserRepository {
 
 
     public UserMemoryRepository() {
     }
-
 
     /**
      *
@@ -20,7 +25,7 @@ public class UserMemoryRepository implements UserRepository {
      *
      * @param user
      * @return the user that has been added
-     * @throws UserAlreadyExistsException
+     * @throws UserAlreadyExistsException if the username alreasy exists
      */
     @Override
     public User save(User user) throws UserAlreadyExistsException {
@@ -44,7 +49,14 @@ public class UserMemoryRepository implements UserRepository {
         return user;
     }
 
-
+    /**
+     * This method checks if the given password matches to the user
+     * in the database
+     *
+     * @param user the user trying to login
+     * @return
+     * @throws AuthenticationFailedException if the user does not exist or the password is incorrect
+     */
     @Override
     public boolean verify(User user) throws AuthenticationFailedException {
         if (!userExists(user.getUsername())) {

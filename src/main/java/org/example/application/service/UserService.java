@@ -6,6 +6,12 @@ import org.example.application.entity.User;
 import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
 
+/**
+ * This class is the bridge between the Contoller
+ * and Repository
+ *
+ * @author Aleksandar Latinovic
+ * */
 public class UserService {
 
     private final UserRepository userRepository;
@@ -13,6 +19,7 @@ public class UserService {
     public UserService() {
         this.userRepository = new UserMemoryRepository();
     }
+
 
     public User create (User user) throws UserAlreadyExistsException {
         return userRepository.save(user);

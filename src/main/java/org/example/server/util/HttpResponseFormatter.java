@@ -2,6 +2,12 @@ package org.example.server.util;
 
 import org.example.server.http.Response;
 
+/**
+ * This class contains the logic to format
+ * Http-Responses
+ *
+ * @author Aleksandar Latinovic
+ */
 public class HttpResponseFormatter {
 
     /**

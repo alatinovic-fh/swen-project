@@ -2,6 +2,12 @@ package org.example.application.routing;
 
 import org.example.application.controller.Controller;
 
+/**
+ * This class is used to specify a Route for the API
+ * and map it to the specific Controller
+ *
+ * @author Aleksandar Latinovic
+ * */
 public class Route {
 
     private final String route;

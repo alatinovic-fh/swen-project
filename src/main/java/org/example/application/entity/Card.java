@@ -3,6 +3,13 @@ package org.example.application.entity;
 
 import java.lang.annotation.ElementType;
 
+/**
+ *
+ * This is the Card entity
+ *
+ * @author Aleksandar Latinovic
+ */
+
 public class Card {
 
     private String id;

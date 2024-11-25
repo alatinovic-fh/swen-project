@@ -10,8 +10,11 @@ import org.example.server.http.Status;
 
 
 /**
+ * This is the base class for the Controllers
+ * and contains the basic methods for them
  *
- */
+ * @author Aleksandar Latinovic
+ * */
 public abstract class Controller {
 
     private final ObjectMapper objectMapper;
