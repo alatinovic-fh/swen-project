@@ -34,5 +34,6 @@ public class MonsterTradingCard implements Application {
 
     private void initializeRoutes(){
         this.router.addRoute("/users", new UserController());
+        this.router.addRoute("/sessions", new UserController());
     }
 }

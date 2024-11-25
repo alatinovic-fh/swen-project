@@ -1,12 +1,11 @@
 package org.example.application.data;
 
 import org.example.application.entity.User;
+import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
 import org.example.application.util.PostgresConfig;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JpaUserRepository implements UserRepository {
 
@@ -43,6 +42,36 @@ public class JpaUserRepository implements UserRepository {
 
         return user;
     }
+
+
+    @Override
+    public String verify(User user) {
+        if (!userExists(user.getUsername())) {
+            throw new AuthenticationFailedException("Login failed");
+        }
+
+        String sql = "SELECT password FROM users WHERE username = ?";
+        try (Connection connection = PostgresConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, user.getUsername());
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String storedPassword = resultSet.getString("password");
+
+                    if (storedPassword.equals(user.getPassword())) {
+                        return user.getUsername() + "-mtcgToken";
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            // TODO Errorhandling
+        }
+
+        throw new AuthenticationFailedException("Login failed");
+    }
+
 
     /**
      * This method checks if the user exists in the database

@@ -9,5 +9,5 @@ public interface UserRepository {
 
     public User save(User user);
 
-
+    String verify(User user);
 }

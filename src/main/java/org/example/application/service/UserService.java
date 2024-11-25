@@ -16,4 +16,8 @@ public class UserService {
     public User create (User user) throws UserAlreadyExistsException {
         return userRepository.save(user);
     }
+
+    public String auth(User user) {
+        return userRepository.verify(user);
+    }
 }

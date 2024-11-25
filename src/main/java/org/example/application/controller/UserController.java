@@ -1,8 +1,7 @@
 package org.example.application.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.application.entity.User;
+import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
 import org.example.application.service.UserService;
 import org.example.server.http.Request;
@@ -28,15 +27,25 @@ public class UserController extends Controller {
     }
 
     public Response login(Request request) {
-        //TODO Implement login
-        return null;
+        Response response = new Response();
+        User user = fromBody(request.getBody(), User.class);
+        try{
+            String token = userService.auth(user);
+            response = json(Status.OK, token);
+        }catch (AuthenticationFailedException e) {
+            response.setStatus(Status.UNAUTHORIZED);
+            response.setBody(e.getMessage());
+        }
+        return response;
     }
 
     @Override
     public Response handle(Request request) {
         // TODO Handle logic GET, POST, PUT, DELETE
-        if (request.getMethod().getName().equals("POST")) {
+        if (request.getMethod().getName().equals("POST") && request.getPath().startsWith("/user")) {
             return register(request);
+        } else if (request.getMethod().getName().equals("POST") && request.getPath().startsWith("/sessions")) {
+            return login(request);
         }
         return null;
     }

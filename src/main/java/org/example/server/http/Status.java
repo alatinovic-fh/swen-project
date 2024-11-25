@@ -5,6 +5,7 @@ public enum Status {
     CREATED(201, "CREATED"),
     NOT_FOUND(404, "OK"),
     CONFLICT(409, "CONFLICT"),
+    UNAUTHORIZED(401, "UNAUTHORIZED"),
     INTERNAL_SERVER_ERROR(500, "Internal Server Error");
 
     private final int code;
