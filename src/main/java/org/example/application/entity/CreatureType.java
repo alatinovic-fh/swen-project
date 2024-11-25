@@ -1,7 +1,6 @@
 package org.example.application.entity;
 
 public enum CreatureType {
-    // Enum instances
     WATER_GOBLIN("Goblin", "Water", false),
     FIRE_GOBLIN("Goblin", "Fire", false),
     REGULAR_GOBLIN("Goblin", "Regular", false),
@@ -20,19 +19,16 @@ public enum CreatureType {
     KRAKEN("Beast", "Water", false),
     WIZZARD("Mage", "Neutral", false);
 
-    // Attributes
     private final String category;
     private final String element;
     private final boolean isSpell;
 
-    // Constructor
     CreatureType(String category, String element, boolean isSpell) {
         this.category = category;
         this.element = element;
         this.isSpell = isSpell;
     }
 
-    // Getters
     public String getCategory() {
         return category;
     }

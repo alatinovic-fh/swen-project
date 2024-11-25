@@ -1,6 +1,6 @@
 package org.example.application.service;
 
-import org.example.application.data.JpaUserRepository;
+import org.example.application.data.UserMemoryRepository;
 import org.example.application.data.UserRepository;
 import org.example.application.entity.User;
 import org.example.application.exception.AuthenticationFailedException;
@@ -11,7 +11,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserService() {
-        this.userRepository = new JpaUserRepository();
+        this.userRepository = new UserMemoryRepository();
     }
 
     public User create (User user) throws UserAlreadyExistsException {

@@ -7,10 +7,10 @@ import org.example.application.util.PostgresConfig;
 
 import java.sql.*;
 
-public class JpaUserRepository implements UserRepository {
+public class UserMemoryRepository implements UserRepository {
 
 
-    public JpaUserRepository() {
+    public UserMemoryRepository() {
     }
 
 
