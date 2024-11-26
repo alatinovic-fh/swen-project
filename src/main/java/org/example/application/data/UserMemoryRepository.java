@@ -32,13 +32,12 @@ public class UserMemoryRepository implements UserRepository {
         if (this.userExists(user.getUsername())) {
             throw new UserAlreadyExistsException("User "+ user.getUsername()+ " already exists");
         }
-        String sql = "INSERT INTO users (username, password, coins) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection connection = PostgresConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
-            statement.setInt(3, user.getCoins());
 
             statement.executeUpdate();
 
