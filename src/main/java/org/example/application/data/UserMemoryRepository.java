@@ -23,6 +23,8 @@ public class UserMemoryRepository implements UserRepository {
      *
      * This method inserts a User object into the database
      *
+     * TODO Connection Pool?
+     *
      * @param user
      * @return the user that has been added
      * @throws UserAlreadyExistsException if the username alreasy exists
@@ -52,29 +54,29 @@ public class UserMemoryRepository implements UserRepository {
      * This method checks if the given password matches to the user
      * in the database
      *
-     * @param user the user trying to login
+     * @param username the username from the user trying to login
      * @return
      * @throws AuthenticationFailedException if the user does not exist or the password is incorrect
      */
     @Override
-    public boolean verify(User user) throws AuthenticationFailedException {
-        if (!userExists(user.getUsername())) {
+    public User findUserByUsername(String username) throws AuthenticationFailedException {
+        // TODO Logic nach Service verschieben
+        // TODO return User not boolean Service ueberprueft
+        if (!userExists(username)) {
             throw new AuthenticationFailedException("Login failed");
         }
 
-        String sql = "SELECT password FROM users WHERE username = ?";
+        String sql = "SELECT * FROM users WHERE username = ?";
         try (Connection connection = PostgresConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, user.getUsername());
+            statement.setString(1, username);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    String storedUsername = resultSet.getString("username");
                     String storedPassword = resultSet.getString("password");
-
-                    if (storedPassword.equals(user.getPassword())) {
-                        return true;
-                    }
+                    return new User(storedUsername, storedPassword);
                 }
             }
         } catch (SQLException e) {

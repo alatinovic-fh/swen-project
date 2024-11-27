@@ -9,5 +9,5 @@ public interface UserRepository {
 
     public User save(User user);
 
-    boolean verify(User user);
+    User findUserByUsername(String username);
 }

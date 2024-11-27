@@ -26,8 +26,9 @@ public class UserService {
     }
 
     public String auth(User user) throws AuthenticationFailedException {
-        if (userRepository.verify(user)){
-            return user.getUsername() +"-mtcgToken";
+        User storedUser = userRepository.findUserByUsername(user.getUsername());
+        if (storedUser.getPassword().equals(user.getPassword())) {
+            return user.getUsername()+"-mtcgToken";
         }
         return null;
     }
