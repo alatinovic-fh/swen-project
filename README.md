@@ -1,7 +1,9 @@
 # Monster Trading Card Game - Latinovic
 
-The program is a REST-based server application that provides a trading and battle system for a fantasy-themed card game. Players can register, collect cards, build decks, compete against each other, and view their statistics.
-
+The program is a REST-based server application that provides a trading and battle
+system for a fantasy-themed card game. Players can register, collect cards, build
+decks, compete against each other, and view their statistics.
+ 
 ## Github
 
 ```bash
@@ -16,8 +18,67 @@ git clone https://github.com/alatinovic-fh/swen-project
 ```yaml
 docker-compose up -d # detached mode
 ```
+### To create table
+Run the init.sql on the database
 
 ## Structure
+
+```
+│   Main.java
+│
+├───application
+│   │   MonsterTradingCard.java
+│   │
+│   ├───controller
+│   │       Controller.java
+│   │       UserController.java
+│   │
+│   ├───data
+│   │       UserMemoryRepository.java
+│   │       UserRepository.java
+│   │
+│   ├───entity
+│   │       Card.java
+│   │       CreatureType.java
+│   │       User.java
+│   │
+│   ├───exception
+│   │       AuthenticationFailedException.java
+│   │       ControllerNotFoundException.java
+│   │       InvalidBodyException.java
+│   │       JsonParserException.java
+│   │       UserAlreadyExistsException.java
+│   │
+│   ├───routing
+│   │       Route.java
+│   │       Router.java
+│   │
+│   ├───service
+│   │       UserService.java
+│   │
+│   └───util
+│           PostgresConfig.java
+│
+└───server
+    │   Application.java
+    │   RequestHandler.java
+    │   Server.java
+    │
+    ├───http
+    │       Method.java
+    │       Request.java
+    │       Response.java
+    │       Status.java
+    │
+    └───util
+            HttpRequestParser.java
+            HttpResponseFormatter.java
+            HttpSocket.java
+            NoHttpStatusException.java
+
+
+```
+
 
 In the root directory, Main.java starts the
 application. The application directory contains the core logic and modules,
@@ -33,9 +94,9 @@ The server directory handles server logic, with Application.
 java to start the server, RequestHandler.java for handling requests,
 and Server.java for managing connections.
 Additional subdirectories like http and util provide classes for
-HTTP protocol and utility functions. The structure follows the MVC pattern,
-effectively separating application logic, data access, error handling,
-and server communication.
+HTTP protocol and utility functions.
+
+### Layer logic
 
 * Controller: Handles communication with the HTTP layer.
 * Service: Contains business logic.
