@@ -3,6 +3,7 @@ package org.example.application.controller;
 import org.example.application.entity.User;
 import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
+import org.example.application.exception.UserNotFoundException;
 import org.example.application.service.UserService;
 import org.example.server.http.Request;
 import org.example.server.http.Response;
@@ -41,16 +42,20 @@ public class UserController extends Controller {
      * authenticate the user
      *
      * @param request
-     * @return the specific token
+     * @return the response with the token
      */
     public Response login(Request request) {
         Response response = new Response();
         User user = fromBody(request.getBody(), User.class);
         try{
             String token = userService.auth(user);
-            response = json(Status.OK, token);
+            response.setStatus(Status.OK);
+            response.setBody(token);
         }catch (AuthenticationFailedException e) {
             response.setStatus(Status.UNAUTHORIZED);
+            response.setBody(e.getMessage());
+        } catch (UserNotFoundException e) {
+            response.setStatus(Status.NOT_FOUND);
             response.setBody(e.getMessage());
         }
         return response;

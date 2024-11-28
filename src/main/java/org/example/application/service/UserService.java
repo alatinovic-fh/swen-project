@@ -5,6 +5,7 @@ import org.example.application.data.UserRepository;
 import org.example.application.entity.User;
 import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
+import org.example.application.exception.UserNotFoundException;
 
 /**
  * This class is the bridge between the Contoller
@@ -25,11 +26,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String auth(User user) throws AuthenticationFailedException {
+    public String auth(User user) throws AuthenticationFailedException, UserNotFoundException {
         User storedUser = userRepository.findUserByUsername(user.getUsername());
         if (storedUser.getPassword().equals(user.getPassword())) {
             return user.getUsername()+"-mtcgToken";
         }
-        return null;
+        throw new AuthenticationFailedException("Login failed");
     }
 }

@@ -20,6 +20,15 @@ docker compose up -d
 ```
 ### To create table
 Run the init.sql on the database
+```shell
+#1.docker shell
+docker exec -it mtcgdb sh
+#2.login as root
+su
+#3.login postgres
+psql -h localhost -p 5432 -U user -d db
+#paste the sql here
+```
 
 ## Structure
 
@@ -85,16 +94,16 @@ application. The application directory contains the core logic and modules,
 such as MonsterTradingCard.java (central game logic), controller
 (e.g., UserController.java for user requests),
 data (repositories like UserRepository.java),
-entity (domain models like Card.java and User.java),
+entity (like Card.java and User.java),
 exception (custom exceptions like AuthenticationFailedException.java),
 routing (route configuration through Route.java and Router.java),
 service (e.g., UserService.java for business logic),
 and util (e.g., PostgresConfig.java for database setup).
-The server directory handles server logic, with Application.
-java to start the server, RequestHandler.java for handling requests,
+The server directory handles server logic,to start the server,
+RequestHandler.java for handling requests,
 and Server.java for managing connections.
 Additional subdirectories like http and util provide classes for
-HTTP protocol and utility functions.
+HTTP protocol and utility functions for parsing Requests and Responses.
 
 ### Layer logic
 

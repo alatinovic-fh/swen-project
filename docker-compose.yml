@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres
+    container_name: mtcgdb
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: 123

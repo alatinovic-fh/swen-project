@@ -3,6 +3,7 @@ package org.example.application.data;
 import org.example.application.entity.User;
 import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
+import org.example.application.exception.UserNotFoundException;
 import org.example.application.util.PostgresConfig;
 
 import java.sql.*;
@@ -59,11 +60,9 @@ public class UserMemoryRepository implements UserRepository {
      * @throws AuthenticationFailedException if the user does not exist or the password is incorrect
      */
     @Override
-    public User findUserByUsername(String username) throws AuthenticationFailedException {
-        // TODO Logic nach Service verschieben
-        // TODO return User not boolean Service ueberprueft
+    public User findUserByUsername(String username) throws UserNotFoundException {
         if (!userExists(username)) {
-            throw new AuthenticationFailedException("Login failed");
+            throw new UserNotFoundException("User not found");
         }
 
         String sql = "SELECT * FROM users WHERE username = ?";
@@ -83,7 +82,7 @@ public class UserMemoryRepository implements UserRepository {
             // TODO Errorhandling
         }
 
-        throw new AuthenticationFailedException("Login failed");
+        throw new UserNotFoundException("User not found");
     }
 
 
