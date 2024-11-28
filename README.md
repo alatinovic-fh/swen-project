@@ -16,7 +16,7 @@ git clone https://github.com/alatinovic-fh/swen-project
 
 ## How to run the database
 ```yaml
-docker-compose up -d # detached mode
+docker compose up -d
 ```
 ### To create table
 Run the init.sql on the database
