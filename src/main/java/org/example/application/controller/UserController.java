@@ -17,6 +17,7 @@ import org.example.server.http.Status;
 public class UserController extends Controller {
 
     private final UserService userService = new UserService();
+    // TODO Constructor
 
     /**
      * This method registers a new User to the database

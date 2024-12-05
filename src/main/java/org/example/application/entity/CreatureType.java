@@ -7,6 +7,7 @@ package org.example.application.entity;
  * @author Aleksandar Latinovic
  * */
 public enum CreatureType {
+    // TODO vllt element Name
     WATER_GOBLIN("Goblin", "Water", false),
     FIRE_GOBLIN("Goblin", "Fire", false),
     REGULAR_GOBLIN("Goblin", "Regular", false),
@@ -19,11 +20,11 @@ public enum CreatureType {
     WATER_SPELL("Spell", "Water", true),
     FIRE_SPELL("Spell", "Fire", true),
     REGULAR_SPELL("Spell", "Regular", true),
-    KNIGHT("Warrior", "Neutral", false),
-    DRAGON("Beast", "Fire", false),
-    ORK("Warrior", "Earth", false),
-    KRAKEN("Beast", "Water", false),
-    WIZZARD("Mage", "Neutral", false);
+    KNIGHT("Knight", "Neutral", false),
+    DRAGON("Dragon", "Fire", false),
+    ORK("Ork", "Earth", false),
+    KRAKEN("Kraken", "Water", false),
+    WIZZARD("Wizzard", "Neutral", false);
 
     private final String category;
     private final String element;
