@@ -31,18 +31,18 @@ jobs:
 
     - name: Validate Number of Unit Tests
       run: |
-        # Extract test summary from Maven output
-        TEST_SUMMARY=$(grep -E "Tests run: [0-9]+," maven-test-output.txt | tail -1)
+        # Extract the test summary from the Maven output
+        TEST_SUMMARY=$(grep -E "Tests run: [0-9]+," maven-output.log | tail -1)
         echo "Test Summary: $TEST_SUMMARY"
-
+        
         # Extract the number of tests run
-        TESTS_RUN=$(echo "$TEST_SUMMARY" | grep -oP "(?<=Tests run: )[0-9]+")
+        TESTS_RUN=$(echo "$TEST_SUMMARY" | awk -F' ' '{for (i=1; i<=NF; i++) if ($i=="run:") print $(i+1)}' | sed 's/,//')
         echo "Tests Run: $TESTS_RUN"
-
-        # Check if the number of tests is at least 40
-        if [ "$TESTS_RUN" -lt 40 ]; then
+        
+        # Check if the number of tests run is at least 40
+        if [[ "$TESTS_RUN" =~ ^[0-9]+$ && "$TESTS_RUN" -ge 40 ]]; then
+          echo "Sufficient tests run: $TESTS_RUN."
+        else
           echo "Not enough tests run: $TESTS_RUN. At least 40 required."
           exit 1
-        else
-          echo "Sufficient tests run: $TESTS_RUN."
-        f
+        fi
