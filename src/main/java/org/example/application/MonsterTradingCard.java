@@ -2,6 +2,7 @@ package org.example.application;
 
 import org.example.application.controller.Controller;
 import org.example.application.controller.UserController;
+import org.example.application.entity.User;
 import org.example.application.exception.ControllerNotFoundException;
 import org.example.application.routing.Router;
 import org.example.server.Application;

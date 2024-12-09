@@ -21,7 +21,7 @@ public class User {
     @JsonProperty("Stack")
     private List<Card> stack;
 
-    @JsonProperty("deck")
+    @JsonProperty("Deck")
     private List<Card> deck;
 
     @JsonProperty("Coins")
@@ -30,7 +30,7 @@ public class User {
     @JsonProperty("Bio")
     private String bio;
 
-    @JsonProperty
+    @JsonProperty("Image")
     private String image;
 
     public User() {

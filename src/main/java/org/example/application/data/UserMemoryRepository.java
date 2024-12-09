@@ -6,6 +6,9 @@ import org.example.application.exception.UserAlreadyExistsException;
 import org.example.application.exception.UserNotFoundException;
 import org.example.application.util.PostgresConfig;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 
 
@@ -18,6 +21,7 @@ public class UserMemoryRepository implements UserRepository {
 
 
     public UserMemoryRepository() {
+        this.initTable();
     }
 
     /**
@@ -113,6 +117,24 @@ public class UserMemoryRepository implements UserRepository {
         }
 
         return false;
+    }
+
+    private void initTable(){
+        try (Connection connection = PostgresConfig.getConnection();
+             Statement statement = connection.createStatement();){
+            //Load init.script users
+            String sql = new String(Files.readAllBytes(Paths.get("./init.sql")));
+            for(String sqlstatement : sql.split(";")){
+                if(!sqlstatement.trim().isEmpty()){
+                    statement.executeUpdate(sqlstatement.trim());
+                }
+            }
+
+        } catch (SQLException e) {
+            // TODO Errorhandling
+        }catch (IOException e){
+            // TODO Errorhandling
+        }
     }
 
 }

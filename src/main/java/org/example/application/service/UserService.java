@@ -33,4 +33,12 @@ public class UserService {
         }
         throw new AuthenticationFailedException("Login failed");
     }
+
+    public User getUserData(String token, String searchedUser)  throws AuthenticationFailedException, UserNotFoundException {
+        if(token.equals("Bearer admin-mtcgToken") || token.equals("Bearer " + searchedUser+"-mtcgToken")) {
+            return userRepository.findUserByUsername(searchedUser);
+        }
+        throw new AuthenticationFailedException("Not Authorized");
+
+    }
 }

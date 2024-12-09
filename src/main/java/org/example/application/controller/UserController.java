@@ -62,6 +62,20 @@ public class UserController extends Controller {
         return response;
     }
 
+    public Response retrieveData(Request request) {
+        Response response = new Response();
+        try{
+            String searchedUser = request.getPath().split("/")[2];
+            String token = request.getHeader("Authorization");
+            User userData = userService.getUserData(token, searchedUser);
+             response = json(Status.OK, userData);
+        }catch (AuthenticationFailedException e){
+            response.setStatus(Status.UNAUTHORIZED);
+            response.setBody(e.getMessage());
+        }
+        return response;
+    }
+
     /**
      * This method defines the used Route
      *
@@ -75,6 +89,8 @@ public class UserController extends Controller {
             return register(request);
         } else if (request.getMethod().getName().equals("POST") && request.getPath().startsWith("/sessions")) {
             return login(request);
+        } else if(request.getMethod().getName().equals("GET") && request.getPath().startsWith("/users/")) {
+            return retrieveData(request);
         }
         return null;
     }
