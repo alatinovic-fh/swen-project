@@ -25,5 +25,24 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+
     - name: Build with Maven
       run: mvn -B test --file pom.xml
+
+    - name: Validate Number of Unit Tests
+      run: |
+        # Extract test summary from Maven output
+        TEST_SUMMARY=$(grep -E "Tests run: [0-9]+," maven-test-output.txt | tail -1)
+        echo "Test Summary: $TEST_SUMMARY"
+
+        # Extract the number of tests run
+        TESTS_RUN=$(echo "$TEST_SUMMARY" | grep -oP "(?<=Tests run: )[0-9]+")
+        echo "Tests Run: $TESTS_RUN"
+
+        # Check if the number of tests is at least 40
+        if [ "$TESTS_RUN" -lt 40 ]; then
+          echo "Not enough tests run: $TESTS_RUN. At least 40 required."
+          exit 1
+        else
+          echo "Sufficient tests run: $TESTS_RUN."
+        f
