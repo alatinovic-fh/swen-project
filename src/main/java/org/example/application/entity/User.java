@@ -33,6 +33,9 @@ public class User {
     @JsonProperty("Image")
     private String image;
 
+    @JsonProperty("Stats")
+    private int stats;
+
     public User() {
     }
 
@@ -40,6 +43,7 @@ public class User {
         this.username = username; //unique
         this.password = password;
         this.coins = 20;
+        this.stats = 100;
         this.stack = new ArrayList<>();
     }
 
