@@ -1,6 +1,8 @@
 package org.example.application.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.lang.annotation.ElementType;
 
 /**
@@ -12,8 +14,10 @@ import java.lang.annotation.ElementType;
 
 public class Card {
 
+    @JsonProperty("Id")
     private String id;
 
+    @JsonProperty("name")
     private CreatureType name;
 
     private final int damage;

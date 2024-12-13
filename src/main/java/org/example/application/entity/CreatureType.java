@@ -8,23 +8,23 @@ package org.example.application.entity;
  * */
 public enum CreatureType {
     // TODO vllt element Name
-    WATER_GOBLIN("Goblin", "Water", false),
-    FIRE_GOBLIN("Goblin", "Fire", false),
-    REGULAR_GOBLIN("Goblin", "Regular", false),
-    WATER_TROLL("Troll", "Water", false),
-    FIRE_TROLL("Troll", "Fire", false),
-    REGULAR_TROLL("Troll", "Regular", false),
-    WATER_ELF("Elf", "Water", false),
-    FIRE_ELF("Elf", "Fire", false),
-    REGULAR_ELF("Elf", "Regular", false),
-    WATER_SPELL("Spell", "Water", true),
-    FIRE_SPELL("Spell", "Fire", true),
-    REGULAR_SPELL("Spell", "Regular", true),
-    KNIGHT("Knight", "Neutral", false),
-    DRAGON("Dragon", "Fire", false),
-    ORK("Ork", "Earth", false),
-    KRAKEN("Kraken", "Water", false),
-    WIZZARD("Wizzard", "Neutral", false);
+    WATER_GOBLIN("goblin", "water", false),
+    FIRE_GOBLIN("goblin", "fire", false),
+    REGULAR_GOBLIN("goblin", "normal", false),
+    WATER_TROLL("troll", "water", false),
+    FIRE_TROLL("troll", "fire", false),
+    REGULAR_TROLL("troll", "normal", false),
+    WATER_ELF("elf", "water", false),
+    FIRE_ELF("elf", "fire", false),
+    REGULAR_ELF("elf", "normal", false),
+    WATER_SPELL("spell", "water", true),
+    FIRE_SPELL("spell", "fire", true),
+    REGULAR_SPELL("spell", "normal", true),
+    KNIGHT("knight", "normal", false),
+    DRAGON("dragon", "fire", false),
+    ORK("ork", "Earth", false),
+    KRAKEN("kraken", "water", false),
+    WIZZARD("wizzard", "normal", false);
 
     private final String category;
     private final String element;
