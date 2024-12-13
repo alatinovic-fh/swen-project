@@ -1,5 +1,7 @@
 package org.example.application.data;
 
+import org.example.application.dto.UserCredentials;
+import org.example.application.dto.UserData;
 import org.example.application.entity.User;
 import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
@@ -35,7 +37,7 @@ public class UserMemoryRepository implements UserRepository {
      * @throws UserAlreadyExistsException if the username alreasy exists
      */
     @Override
-    public User save(User user) throws UserAlreadyExistsException {
+    public UserCredentials save(UserCredentials user) throws UserAlreadyExistsException {
         if (this.userExists(user.getUsername())) {
             throw new UserAlreadyExistsException("User "+ user.getUsername()+ " already exists");
         }
@@ -77,11 +79,41 @@ public class UserMemoryRepository implements UserRepository {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    String storedUsername = resultSet.getString("username");
-                    String storedPassword = resultSet.getString("password");
-                    return new User(storedUsername, storedPassword);
+                    User user = new User();
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setFullName(resultSet.getString("fullname"));
+                    user.setBio(resultSet.getString("bio"));
+                    user.setImage(resultSet.getString("image"));
+                    user.setCoins(resultSet.getInt("coins"));
+                    user.setStats(resultSet.getInt("stats"));
+                    // TODO Add deck and stack deserialization
+                    return user;
                 }
             }
+        } catch (SQLException e) {
+            System.out.println("Error");
+            // TODO Errorhandling
+        }
+
+        throw new UserNotFoundException("User not found");
+    }
+
+    @Override
+    public UserData update(String searchedUser, UserData userData) throws UserNotFoundException {
+        if(!userExists(searchedUser)){
+            throw new UserNotFoundException("User not found");
+        }
+        String sql = "UPDATE users SET fullname = ?, bio = ?, image = ? WHERE username = ?";
+        try (Connection connection = PostgresConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, userData.getFullName());
+            statement.setString(2, userData.getBio());
+            statement.setString(3, userData.getImage());
+            statement.setString(4, searchedUser);
+            statement.executeUpdate();
+            return userData;
         } catch (SQLException e) {
             // TODO Errorhandling
         }

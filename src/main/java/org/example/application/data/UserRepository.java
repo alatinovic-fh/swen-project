@@ -1,5 +1,7 @@
 package org.example.application.data;
 
+import org.example.application.dto.UserCredentials;
+import org.example.application.dto.UserData;
 import org.example.application.entity.User;
 
 /**
@@ -7,7 +9,9 @@ import org.example.application.entity.User;
  */
 public interface UserRepository {
 
-    public User save(User user);
+    public UserCredentials save(UserCredentials user);
 
     User findUserByUsername(String username);
+
+    UserData update(String username, UserData userdata);
 }

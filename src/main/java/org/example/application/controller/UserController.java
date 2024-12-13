@@ -1,5 +1,7 @@
 package org.example.application.controller;
 
+import org.example.application.dto.UserCredentials;
+import org.example.application.dto.UserData;
 import org.example.application.entity.User;
 import org.example.application.exception.AuthenticationFailedException;
 import org.example.application.exception.UserAlreadyExistsException;
@@ -26,11 +28,11 @@ public class UserController extends Controller {
      * @return the registered user
      */
     private Response register(Request request) {
-        User user = fromBody(request.getBody(), User.class);
+        UserCredentials userCredentials = fromBody(request.getBody(), UserCredentials.class);
         Response response = new Response();
         try {
-            user = userService.create(user);
-            response = json(Status.CREATED, user);
+            userCredentials = userService.create(userCredentials);
+            response = json(Status.CREATED, userCredentials);
         }catch (UserAlreadyExistsException e) {
             response.setStatus(Status.CONFLICT);
             response.setBody(e.getMessage());
@@ -67,10 +69,31 @@ public class UserController extends Controller {
         try{
             String searchedUser = request.getPath().split("/")[2];
             String token = request.getHeader("Authorization");
-            User userData = userService.getUserData(token, searchedUser);
-             response = json(Status.OK, userData);
+            UserData userData = userService.getUserData(token, searchedUser);
+            response = json(Status.OK, userData);
         }catch (AuthenticationFailedException e){
             response.setStatus(Status.UNAUTHORIZED);
+            response.setBody(e.getMessage());
+        }catch (UserNotFoundException e) {
+            response.setStatus(Status.NOT_FOUND);
+            response.setBody(e.getMessage());
+        }
+        return response;
+    }
+
+    public Response updateUserData(Request request) {
+        Response response = new Response();
+        try {
+            String searchedUser = request.getPath().split("/")[2];
+            String token = request.getHeader("Authorization");
+            UserData userData = fromBody(request.getBody(), UserData.class);
+            UserData updatedUserData = userService.setUserData(token, searchedUser, userData);
+            response = json(Status.OK, updatedUserData);
+        }catch (AuthenticationFailedException e){
+            response.setStatus(Status.UNAUTHORIZED);
+            response.setBody(e.getMessage());
+        }catch (UserNotFoundException e) {
+            response.setStatus(Status.NOT_FOUND);
             response.setBody(e.getMessage());
         }
         return response;
@@ -91,6 +114,8 @@ public class UserController extends Controller {
             return login(request);
         } else if(request.getMethod().getName().equals("GET") && request.getPath().startsWith("/users/")) {
             return retrieveData(request);
+        } else if(request.getMethod().getName().equals("PUT") && request.getPath().startsWith("/users/")) {
+            return updateUserData(request);
         }
         return null;
     }

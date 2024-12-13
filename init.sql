@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
     stack VARCHAR(255),
     deck VARCHAR(255),
     coins INT DEFAULT 20,
+    fullname VARCHAR(255),
     bio VARCHAR(255),
     image VARCHAR(255),
     stats INT DEFAULT 100

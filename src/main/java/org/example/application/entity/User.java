@@ -27,6 +27,9 @@ public class User {
     @JsonProperty("Coins")
     private int coins;
 
+    @JsonProperty("Name")
+    private String fullName;
+
     @JsonProperty("Bio")
     private String bio;
 
@@ -69,5 +72,53 @@ public class User {
 
     public String getImage() {
         return image;
+    }
+
+    public List<Card> getDeck() {
+        return deck;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public int getStats() {
+        return stats;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setStack(List<Card> stack) {
+        this.stack = stack;
+    }
+
+    public void setDeck(List<Card> deck) {
+        this.deck = deck;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setStats(int stats) {
+        this.stats = stats;
     }
 }
