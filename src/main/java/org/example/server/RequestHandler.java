@@ -9,12 +9,13 @@ import org.example.server.util.HttpSocket;
 import java.io.IOException;
 import java.net.Socket;
 import java.time.LocalDateTime;
+
 /**
  * This class handles the incoming Requests
  *
  * @author Aleksandar Latinovic
  * */
-public class RequestHandler {
+public class RequestHandler implements Runnable{
 
     private final Socket socket;
     private final Application application;
@@ -22,6 +23,13 @@ public class RequestHandler {
     public RequestHandler(Socket socket, Application application){
         this.socket = socket;
         this.application = application;
+    }
+
+
+    @Override
+    public void run() {
+        this.handle();
+
     }
 
 
@@ -46,4 +54,5 @@ public class RequestHandler {
         }
 
     }
+
 }
