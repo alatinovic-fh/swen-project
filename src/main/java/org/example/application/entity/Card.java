@@ -32,9 +32,11 @@ public class Card {
         this.setCreatureType();
     }
 
-    public Card(int damage) {
+    public Card(String id, String name, int damage) {
+        this.id = id;
+        this.name = name;
         this.damage = damage;
-
+        this.setCreatureType();
     }
 
     public String getId() {
@@ -55,7 +57,7 @@ public class Card {
 
     private void setCreatureType() {
         for(CreatureType creatureType : CreatureType.values()) {
-            if(creatureType.name().equals(this.name)) {
+            if(creatureType.getName().equals(this.name)) {
                 this.creatureType = creatureType;
             }
         }

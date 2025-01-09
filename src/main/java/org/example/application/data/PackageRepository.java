@@ -4,7 +4,10 @@ import org.example.application.entity.Card;
 import org.example.application.util.PostgresConfig;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+
+//TODO Errorhandling maybe InternalServerError?
 
 public class PackageRepository {
 
@@ -55,24 +58,38 @@ public class PackageRepository {
     }
 
 
-    public void assignCardsToUser(String username) {
+    public boolean assignCardsToUser(String username, int packageId) {
+        String sql = "UPDATE cards SET username = ? WHERE package_id = ?";
+        try (Connection connection = PostgresConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)){
 
+            statement.setString(1, username);
+            statement.setInt(2, packageId);
+            statement.executeUpdate();
+            return true;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    public void updatePackageToBought(int packageId) {
-        String sql = "UPDATE packages SET bought = true WHERE package_id = ?";
+    public boolean updatePackageToBought(int packageId) {
+        String sql = "UPDATE packages SET bought = true WHERE id = ?";
         try (Connection connection = PostgresConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)){
 
             statement.setInt(1, packageId);
+            statement.executeUpdate();
+            return true;
 
         }catch(SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public int findCoinsByUsername(String username){
-        String sql = "SELECT coins FROM packages WHERE username = ?";
+        String sql = "SELECT coins FROM users WHERE username = ?";
         try (Connection connection = PostgresConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)){
 
@@ -109,6 +126,18 @@ public class PackageRepository {
 
 
     public boolean updateCoins(String username){
+        String sql = "UPDATE users SET coins = coins - 5 WHERE username = ?";
+
+        try (Connection connection = PostgresConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, username);
+            statement.executeUpdate();
+            return true;
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -135,4 +164,28 @@ public class PackageRepository {
         return false;
     }
 
+
+    public List<Card> getPackageCards(int packageId) {
+        String sql = "SELECT * FROM cards WHERE package_id = ?";
+        try (Connection connection = PostgresConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, packageId);
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<Card> cards = new ArrayList<>();
+            while (resultSet.next()) {
+                Card card = new Card(
+                        resultSet.getString("card_id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("damage")
+                );
+
+                cards.add(card);
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS users (
     stats INT DEFAULT 100
     );
 
---TODO change database Type
 
 create table if not exists Packages (
                                         id serial primary key,
@@ -28,5 +27,13 @@ create table if not exists Cards (
                        card_id varchar(255) primary key not null,
                        name varchar(255) not null,
                        damage float not null
+);
+
+create table Decks (
+                       username varchar(255) not null unique,
+                       card1_id varchar(255),
+                       card2_id varchar(255),
+                       card3_id varchar(255),
+                       card4_id varchar(255)
 );
 

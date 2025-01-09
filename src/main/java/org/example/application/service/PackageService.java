@@ -2,10 +2,7 @@ package org.example.application.service;
 
 import org.example.application.data.PackageRepository;
 import org.example.application.entity.Card;
-import org.example.application.exception.AuthenticationFailedException;
-import org.example.application.exception.NotEnoughCoinsException;
-import org.example.application.exception.PackageConflictException;
-import org.example.application.exception.UnauthorizedException;
+import org.example.application.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +33,11 @@ public class PackageService {
     }
 
 
-    public List<Card> assignPackage(String token){
-        //401 403 404
-        ArrayList<Card> cards = new ArrayList<>();
+    public List<Card> buyPackage(String token){
+        List<Card> cards = null;
         String username = "";
         int packageId = this.verifyPackageAvailability();
+        if(packageId == 0) throw new PackageConflictException("No Packages available");
         if(token.startsWith("Bearer ") && token.contains("-mtcgToken")){
             Pattern pattern = Pattern.compile("Bearer\\s(\\w+)-");
             Matcher matcher = pattern.matcher(token);
@@ -52,11 +49,14 @@ public class PackageService {
             throw new AuthenticationFailedException("Authentication failed");
         }
         if(!this.verifyCoins(username)) throw new NotEnoughCoinsException("Not enough coins");
-        if(packageId == 0) throw new PackageConflictException("Package not available");
-        this.packageRepository.updatePackageToBought(packageId);
-        this.packageRepository.assignCardsToUser(username);
-
-        return cards;
+        if(this.packageRepository.updatePackageToBought(packageId) && this.packageRepository.assignCardsToUser(username,packageId) && this.packageRepository.updateCoins(username)){
+            cards = this.packageRepository.getPackageCards(packageId);
+            if (cards == null){
+                throw new InternalServerError("Cards not found");
+            }else
+                return cards;
+        }
+        throw new InternalServerError("Interal Server error");
     }
 
 

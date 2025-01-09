@@ -1,10 +1,7 @@
 package org.example.application.controller;
 
 import org.example.application.entity.Card;
-import org.example.application.exception.AuthenticationFailedException;
-import org.example.application.exception.PackageConflictException;
-import org.example.application.exception.UnauthorizedException;
-import org.example.application.exception.UserNotFoundException;
+import org.example.application.exception.*;
 import org.example.application.service.PackageService;
 import org.example.server.http.Request;
 import org.example.server.http.Response;
@@ -50,10 +47,17 @@ public class PackageController extends Controller {
         Response response = new Response();
         try{
             String token = request.getHeader("Authorization");
-
+            List<Card> aquiredCards = this.packageService.buyPackage(token);
+            response = json(Status.OK, aquiredCards);
 
         }catch (AuthenticationFailedException e){
             response.setStatus(Status.UNAUTHORIZED);
+            response.setBody(e.getMessage());
+        }catch (NotEnoughCoinsException e){
+            response.setStatus(Status.FORBIDDEN);
+            response.setBody(e.getMessage());
+        }catch (PackageConflictException e){
+            response.setStatus(Status.NOT_FOUND);
             response.setBody(e.getMessage());
         }
 
