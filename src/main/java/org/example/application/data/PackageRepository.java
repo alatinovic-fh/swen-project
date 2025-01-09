@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PackageRepository {
 
-    public boolean insertPackage(List<Card> cards, List<String> cardIds) {
+    public void insertPackage(List<Card> cards, List<String> cardIds) {
         String sql = "INSERT INTO packages (card_1, card_2, card_3, card_4, card_5, bought) values (?, ?, ?, ?, ?, ?)";
         try (Connection connection = PostgresConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -25,7 +25,6 @@ public class PackageRepository {
                     int packageId = keys.getInt(1);
 
                     insertCards(cards, packageId);
-                    return true;
                 }
             }
 
@@ -33,7 +32,6 @@ public class PackageRepository {
             e.printStackTrace();
         }
 
-        return false;
     }
 
 
@@ -57,20 +55,58 @@ public class PackageRepository {
     }
 
 
-    public boolean updatePackageToBought(String username){
-        return false;
+    public void assignCardsToUser(String username) {
+
     }
+
+    public void updatePackageToBought(int packageId) {
+        String sql = "UPDATE packages SET bought = true WHERE package_id = ?";
+        try (Connection connection = PostgresConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setInt(1, packageId);
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int findCoinsByUsername(String username){
+        String sql = "SELECT coins FROM packages WHERE username = ?";
+        try (Connection connection = PostgresConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("coins");
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
-    public boolean findAvailablePackage(){
-        return false;
+    public int findAvailablePackage() {
+        String sql = "SELECT id FROM packages WHERE bought = false LIMIT 1";
+        try (Connection connection = PostgresConfig.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("id");
+            }else{
+                return 0;
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
-    public boolean assignCardsToUser(String username, int packageId){
-        return false;
-    }
 
     public boolean updateCoins(String username){
         return false;
@@ -96,11 +132,6 @@ public class PackageRepository {
             // TODO Errorhandling
         }
 
-        return false;
-    }
-
-
-    private boolean insertCard(Card card, int packageid){
         return false;
     }
 

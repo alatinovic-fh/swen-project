@@ -27,7 +27,7 @@ public class PackageController extends Controller {
         try {
             String token = request.getHeader("Authorization");
             List<Card> cards = new ArrayList(fromBodyAsList(request.getBody(), Card.class));
-            boolean created = this.packageService.addPackage(token, cards);
+            this.packageService.addPackage(token, cards);
             response = json(Status.CREATED, "");
         }catch (AuthenticationFailedException e){
             response.setStatus(Status.UNAUTHORIZED);
@@ -48,6 +48,14 @@ public class PackageController extends Controller {
 
     public Response aquire(Request request) {
         Response response = new Response();
+        try{
+            String token = request.getHeader("Authorization");
+
+
+        }catch (AuthenticationFailedException e){
+            response.setStatus(Status.UNAUTHORIZED);
+            response.setBody(e.getMessage());
+        }
 
         return response;
     }
