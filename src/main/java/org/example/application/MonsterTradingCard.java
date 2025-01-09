@@ -1,6 +1,7 @@
 package org.example.application;
 
 import org.example.application.controller.Controller;
+import org.example.application.controller.PackageController;
 import org.example.application.controller.UserController;
 import org.example.application.entity.User;
 import org.example.application.exception.ControllerNotFoundException;
@@ -48,5 +49,7 @@ public class MonsterTradingCard implements Application {
     private void initializeRoutes(){
         this.router.addRoute("/users", new UserController());
         this.router.addRoute("/sessions", new UserController());
+        this.router.addRoute("/packages", new PackageController());
+        this.router.addRoute("/transactions/packages", new PackageController());
     }
 }

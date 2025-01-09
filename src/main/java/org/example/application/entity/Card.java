@@ -1,6 +1,7 @@
 package org.example.application.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.lang.annotation.ElementType;
@@ -17,13 +18,46 @@ public class Card {
     @JsonProperty("Id")
     private String id;
 
-    @JsonProperty("name")
-    private CreatureType name;
+    @JsonProperty("Name")
+    private String name;
 
-    private final int damage;
+    @JsonIgnore
+    private CreatureType creatureType;
 
+    @JsonProperty("Damage")
+    private int damage;
+
+
+    public Card() {
+        this.setCreatureType();
+    }
 
     public Card(int damage) {
         this.damage = damage;
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CreatureType getCreatureType() {
+        return creatureType;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    private void setCreatureType() {
+        for(CreatureType creatureType : CreatureType.values()) {
+            if(creatureType.name().equals(this.name)) {
+                this.creatureType = creatureType;
+            }
+        }
     }
 }

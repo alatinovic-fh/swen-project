@@ -1,12 +1,16 @@
 package org.example.application.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.application.entity.Card;
 import org.example.application.exception.InvalidBodyException;
 import org.example.application.exception.JsonParserException;
 import org.example.server.http.Request;
 import org.example.server.http.Response;
 import org.example.server.http.Status;
+
+import java.util.List;
 
 
 /**
@@ -28,6 +32,14 @@ public abstract class Controller {
     protected <T> T fromBody(String body, Class<T> type) {
         try {
             return objectMapper.readValue(body, type);
+        } catch (JsonProcessingException e) {
+            throw new InvalidBodyException(e);
+        }
+    }
+
+    public <T> List<T> fromBodyAsList(String body, Class <T> type) {
+        try {
+            return objectMapper.readValue(body, objectMapper.getTypeFactory().constructCollectionType(List.class, type));
         } catch (JsonProcessingException e) {
             throw new InvalidBodyException(e);
         }

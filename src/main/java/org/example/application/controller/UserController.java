@@ -18,8 +18,13 @@ import org.example.server.http.Status;
 
 public class UserController extends Controller {
 
-    private final UserService userService = new UserService();
+    private final UserService userService;
     // TODO Constructor
+
+    public UserController() {
+        super();
+        this.userService = new UserService();
+    }
 
     /**
      * This method registers a new User to the database
@@ -107,7 +112,6 @@ public class UserController extends Controller {
      */
     @Override
     public Response handle(Request request) {
-        // TODO Handle logic GET, POST, PUT, DELETE
         if (request.getMethod().getName().equals("POST") && request.getPath().startsWith("/user")) {
             return register(request);
         } else if (request.getMethod().getName().equals("POST") && request.getPath().startsWith("/sessions")) {
