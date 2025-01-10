@@ -7,7 +7,9 @@ public enum Status {
     CONFLICT(409, "CONFLICT"),
     UNAUTHORIZED(401, "UNAUTHORIZED"),
     FORBIDDEN(403, "FORBIDDEN"),
-    INTERNAL_SERVER_ERROR(500, "Internal Server Error");
+    INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+    NO_CONTENT(204,  "No Content"),
+    BAD_REQUEST(400, "Bad Request");
 
     private final int code;
     private final String message;

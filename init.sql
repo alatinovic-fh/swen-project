@@ -31,9 +31,8 @@ create table if not exists Cards (
 
 create table Decks (
                        username varchar(255) not null unique,
-                       card1_id varchar(255),
-                       card2_id varchar(255),
-                       card3_id varchar(255),
-                       card4_id varchar(255)
+                       card_1 varchar(255),
+                       card_2 varchar(255),
+                       card_3 varchar(255),
+                       card_4 varchar(255)
 );
-

@@ -1,5 +1,6 @@
 package org.example.application;
 
+import org.example.application.controller.CardController;
 import org.example.application.controller.Controller;
 import org.example.application.controller.PackageController;
 import org.example.application.controller.UserController;
@@ -51,5 +52,7 @@ public class MonsterTradingCard implements Application {
         this.router.addRoute("/sessions", new UserController());
         this.router.addRoute("/packages", new PackageController());
         this.router.addRoute("/transactions/packages", new PackageController());
+        this.router.addRoute("/cards", new CardController());
+        this.router.addRoute("/deck", new CardController());
     }
 }

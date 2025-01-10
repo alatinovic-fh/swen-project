@@ -182,7 +182,7 @@ public class PackageRepository {
 
                 cards.add(card);
             }
-
+            return cards;
         }catch (SQLException e) {
             e.printStackTrace();
         }
